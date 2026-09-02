@@ -11,14 +11,14 @@ const ToolInput = z.object({
   horizon: z.string().optional(),
 });
 
-const SYSTEM: Record<string, string> = {
+const SYSTEM = {
   email:
     "You are a workplace email writing assistant. Return a complete, ready-to-send email in plain text. Start with a 'Subject:' line, then greeting, body paragraphs, a short bulleted list of asks when useful, and a sign-off. No commentary, no markdown code fences.",
   planner:
     "You are a work planning assistant. Turn the raw task list into a prioritized schedule in plain text. Group by day (or by week if a weekly plan is requested), give each task a time block, an urgency tag in square brackets — [URGENT], [HIGH], [MEDIUM], [LOW] — and an estimated duration. End with a short 'Notes' section on trade-offs and what to drop if time runs short.",
   research:
     "You are a research analyst. Read the supplied material and return plain text with three clearly labelled sections: 'KEY TAKEAWAYS' (5-7 concise bullets), 'STRUCTURED INSIGHTS' (short thematic groupings with one or two sentences each), and 'PRACTICAL RECOMMENDATIONS' (numbered, action-oriented, each naming an owner-type and a timeframe). Be specific and avoid filler.",
-};
+} as const;
 
 export const runTool = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => ToolInput.parse(input))
